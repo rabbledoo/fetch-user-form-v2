@@ -1,5 +1,23 @@
 # Getting Started with Create React App
 
+
+
+useEffect( () => {
+  async function fetchMyAPI(){
+    let response = await fetch('https://frontend-take-home.fetchrewards.com/form')
+    response = await response.json()
+    setListOfStates(response.states)
+  }
+  fetchMyAPI()
+  console.log(listOfStates)
+  // .then(res => res.json())
+  // .then(result => {
+  //   setListOfStates(result)
+  // console.log(listOfStates)
+  // })
+},[])
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
