@@ -14,6 +14,7 @@ function App() {
 
   const [listOfStates, setListOfStates] = useState({})
   const [listOfOccupations, setListOfOccupations] = useState([])
+  const [occupationsObjects, setOccupationsObjects] = useState({})
   // const {err, setErr} = useState(false)
 
   const onSubmit = (data) => {
@@ -35,8 +36,11 @@ useEffect(() => {
           // console.log(json.occupations)
           setListOfStates(json.states);
           setListOfOccupations(json.occupations)
-          console.log(listOfStates);
-          console.log(listOfOccupations)
+          let occupationsObjects = listOfOccupations.map((str, index) => ({value: str, id: index + 1}))
+          // console.log(listOfStates);
+          // console.log(listOfOccupations)
+          setOccupationsObjects(occupationsObjects)
+          console.log(occupationsObjects)
 
       } catch (error) {
           console.log("error", error);
@@ -44,29 +48,8 @@ useEffect(() => {
   };
 
   fetchData();
-}, []);
-
-
-
-// useEffect( () => {
   
-//     fetch(baseURL)
-//     .then(res => res.json())
-//     .then(res => {
-//       console.log(res.occupations)
-//       setListOfStates({...listOfStates, data: res.states})
-//       setListOfOccupations(res.occupations)
-//     })
-//     .catch(err => setErr(true))
-//     // response = await response.json()
-//     // setListOfStates(response.states)
-//   console.log(listOfStates)
-//   // .then(res => res.json())
-//   // .then(result => {
-//   //   setListOfStates(result)
-//   // console.log(listOfStates)
-//   // })
-// },[])
+}, []);
 
 
 
@@ -75,6 +58,7 @@ useEffect(() => {
 
       <div>Hello</div>
       <div>World</div>
+      <div>Again</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
@@ -118,9 +102,19 @@ useEffect(() => {
         {errors.password && errors.password.message}
         </span>
         <input type="submit" />
+       
       </form>
-      {listOfOccupations.map( item => <li>{item}</li>)}
-      {/* {listOfStates.map( item => <li>{item}</li>)} */}
+      <select>
+            {occupationsObjects.map((option) => (
+              <option value={option.id}>{option.value}</option>
+            ))}
+          </select>
+          <select>
+            {listOfStates.map((option) => (
+              <option value={option.name}>{option.abbreviation}</option>
+            ))}
+          </select> 
+      
     </div>
   );
 }

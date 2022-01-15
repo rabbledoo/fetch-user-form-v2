@@ -1,6 +1,17 @@
 # Getting Started with Create React App
 
 
+ <select>
+            {occupationsObjects.map((option) => (
+              <option value={option.id}>{option.value}</option>
+            ))}
+          </select>
+          <select>
+            {listOfStates.map((option) => (
+              <option value={option.name}>{option.abbreviation}</option>
+            ))}
+          </select> 
+
 
 useEffect( () => {
   async function fetchMyAPI(){
