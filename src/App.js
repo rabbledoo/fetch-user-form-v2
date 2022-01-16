@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import "./App.css";
-import { useForm, fetchAPI } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Confetti from "react-confetti";
 
 
@@ -15,9 +15,7 @@ function App() {
 
   const [listOfStates, setListOfStates] = useState([])
   const [listOfOccupations, setListOfOccupations] = useState([])
-  const [occupationsObjects, setOccupationsObjects] = useState([{}])
   const [isSuccess, setIsSuccess] = useState(false)
-  // const {err, setErr} = useState(false)
 
 
   //  pass in data to see what we have
@@ -28,26 +26,19 @@ function App() {
       body: JSON.stringify(data)
   };
   const response = await fetch([baseURL], requestOptions);
-  // const jsonData = await response.json();
-
-
     console.log(response.status)
 
     if (response.status === 200){
-      console.log("You win boiiiiiii")
+      console.log("You win ")
       setIsSuccess(true)
     } else {
       console.log("you lose")
     }
-
-    
-
   };
 
-
-//  useEffect hook runs when the page loads
-//  fetch state and occupation data
-
+//  useEffect hook runs when the page first loads
+//  sets initial state in the app
+//  fetches state and occupation data from baseURL API
 
 useEffect(() => {
 
@@ -55,35 +46,25 @@ useEffect(() => {
       try {
           const response = await fetch(baseURL);
           const json = await response.json();
-          // console.log(json.states);
-          // console.log(json.occupations)
+          console.log(json.states);
+          console.log(json.occupations)
           setListOfStates(json.states);
           setListOfOccupations(json.occupations)
-          let occupationsObjects = listOfOccupations.map((str, index) => ({value: str, id: index + 1}))
-          // console.log(listOfStates);
-          // console.log(listOfOccupations)
-          setOccupationsObjects(occupationsObjects)
-          console.log(occupationsObjects)
 
       } catch (error) {
           console.log("error", error);
       }
   };
-
   fetchData();
-  
 }, []);
-
-
 
   return (
     <div>
 
-      <div>Hello</div>
-      <div>Worlds</div>
-      <div>Again</div>
+      <div className="container">
+      <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
       {isSuccess === true ? <Confetti /> : <div>Form not submitted yet</div>}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div>Dynamic Form</div>
         <input
           type="text"
           placeholder="Enter name"
@@ -125,28 +106,30 @@ useEffect(() => {
          <span>
         {errors.password && errors.password.message}
         </span>
-        {/* <select {...register("occupation", {
+
+
+        <select {...register("occupation", {
           required: "Please enter your occupation"
         })}>
-            {occupationsObjects.map((option) => (
-              <option value={option.id}>{option.value}</option>
+            {listOfOccupations.map((option) => (
+              <option value={option}>{option}</option>
             ))}
           </select>
           <span>{errors.occupation && errors.occupation.message}</span>
-          <select {...register("state", {
+          <select value="" {...register("state", {
             required: "Please enter your state"
           })}>
             {listOfStates.map((option) => (
               <option value={option.name}>{option.abbreviation}</option>
             ))}
-          </select>  */}
+          </select> 
           <span>
         {errors.state && errors.state.message}
         </span>
           <input type="submit" />
       </form>
        
-      
+      </div>
     </div>
   );
 }
