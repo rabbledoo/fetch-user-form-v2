@@ -4,15 +4,19 @@ import { useForm } from "react-hook-form";
 import Confetti from "react-confetti";
 
 
+//  run "npm start" in your terminal to start the application
+//  if you neglect to type in the provided fields, or manually choose a selection you will get error message.
+//  you get a fun surprise if you successfully fill out and submit the form
 
 
 function App() {
 
   const baseURL = 'https://frontend-take-home.fetchrewards.com/form'
+
+  // utilizing the built in react-hook-form library hooks
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  //  get list of states
-
+  //  set inital state of the app
   const [listOfStates, setListOfStates] = useState([])
   const [listOfOccupations, setListOfOccupations] = useState([])
   const [isSuccess, setIsSuccess] = useState(false)
