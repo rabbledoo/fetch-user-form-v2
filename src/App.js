@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./App.css";
-import { useForm } from "react-hook-form";
+import { useForm, fetchAPI } from "react-hook-form";
+import Confetti from "react-confetti";
 
 
 
@@ -12,13 +13,35 @@ function App() {
 
   //  get list of states
 
-  const [listOfStates, setListOfStates] = useState({})
+  const [listOfStates, setListOfStates] = useState([])
   const [listOfOccupations, setListOfOccupations] = useState([])
-  const [occupationsObjects, setOccupationsObjects] = useState({})
+  const [occupationsObjects, setOccupationsObjects] = useState([{}])
+  const [isSuccess, setIsSuccess] = useState(false)
   // const {err, setErr} = useState(false)
 
-  const onSubmit = (data) => {
-    console.log(data);
+
+  //  pass in data to see what we have
+  const onSubmit = async (data) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+  };
+  const response = await fetch([baseURL], requestOptions);
+  // const jsonData = await response.json();
+
+
+    console.log(response.status)
+
+    if (response.status === 200){
+      console.log("You win boiiiiiii")
+      setIsSuccess(true)
+    } else {
+      console.log("you lose")
+    }
+
+    
+
   };
 
 
@@ -57,8 +80,9 @@ useEffect(() => {
     <div>
 
       <div>Hello</div>
-      <div>World</div>
+      <div>Worlds</div>
       <div>Again</div>
+      {isSuccess === true ? <Confetti /> : <div>Form not submitted yet</div>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
@@ -101,19 +125,27 @@ useEffect(() => {
          <span>
         {errors.password && errors.password.message}
         </span>
-        <input type="submit" />
-       
-      </form>
-      <select>
+        {/* <select {...register("occupation", {
+          required: "Please enter your occupation"
+        })}>
             {occupationsObjects.map((option) => (
               <option value={option.id}>{option.value}</option>
             ))}
           </select>
-          <select>
+          <span>{errors.occupation && errors.occupation.message}</span>
+          <select {...register("state", {
+            required: "Please enter your state"
+          })}>
             {listOfStates.map((option) => (
               <option value={option.name}>{option.abbreviation}</option>
             ))}
-          </select> 
+          </select>  */}
+          <span>
+        {errors.state && errors.state.message}
+        </span>
+          <input type="submit" />
+      </form>
+       
       
     </div>
   );
