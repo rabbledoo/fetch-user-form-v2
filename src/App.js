@@ -120,7 +120,7 @@ useEffect(() => {
             ))}
           </select>
           <span>{errors.occupation && errors.occupation.message}</span>
-          <select value="" {...register("state", {
+          <select {...register("state", {
             required: "Please enter your state"
           })}>
             {listOfStates.map((option) => (
