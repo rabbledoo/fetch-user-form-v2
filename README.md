@@ -1,10 +1,11 @@
 SCOTTS README
 ================================================================
 
-1.  In the terminal in the project directory, run "npm start".  This starts the app in your local server.
-2.  Manually fill out each input.  If you don't, you will get validation errors.
-3.  Click submit to submit form data to API
-4.  See the awesome surpise when you successfully submit the form.
+1.  In your terminal clone this git repo.  "git clone https://github.com/rabbledoo/fetch-user-form-v2.git"
+2.  In your terminal in the project directory, run "npm start".  This starts the app in your local server.
+3.  Manually fill out each input.  If you don't, you will get validation errors.
+4.  Click submit to submit form data to API
+5.  See the awesome surpise when you successfully submit the form.
 
 
 React app basic Readme below
